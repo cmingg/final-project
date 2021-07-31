@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd" version="4.0">
+  <display-name>Camping</display-name>
+  <welcome-file-list>
+    <welcome-file>index.html</welcome-file>
+    <welcome-file>index.htm</welcome-file>
+    <welcome-file>index.jsp</welcome-file>
+    <welcome-file>default.html</welcome-file>
+    <welcome-file>default.htm</welcome-file>
+    <welcome-file>default.jsp</welcome-file>
+  </welcome-file-list>
+  
+  <servlet>
+  	<servlet-name>dispatcherServlet</servlet-name>
+  	<servlet-class>
+  		<!-- 맨 처음 서블릿을 알려주는 코드 -->
+  		org.springframework.web.servlet.DispatcherServlet
+  	</servlet-class>
+  	
+  	<init-param>
+  		<param-name>contextConfigLocation</param-name>
+  		<param-value>
+  			/WEB-INF/spring/servlet-context.xml
+  			/WEB-INF/spring/aop-context.xml
+  			<!-- 
+  			/WEB-INF/spring/file-context.xml
+  			/WEB-INF/spring/websocket-context.xml 
+  			-->
+  			
+  		</param-value>
+  	</init-param>
+  	
+  	<!-- load-on-startup 1 : 제일 첫번째로 가야할 XML이다 설정, 여기부터 시작해라 -->
+  	<load-on-startup>1</load-on-startup>
+  	
+  </servlet>
+  
+  <servlet-mapping>
+  	<servlet-name>dispatcherServlet</servlet-name>
+  	<!-- <url-pattern>/</url-pattern> -->
+  	<url-pattern>*.do</url-pattern>
+  </servlet-mapping>
+  
+  <!-- DB관련 -->
+  <context-param>
+  	<param-name>contextConfigLocation</param-name>
+  	<param-value>
+  		/WEB-INF/spring/applicationContext.xml
+  	</param-value>
+  </context-param>
+  
+  <!-- listener : db를 틀어놨을 때 반응해주는 부분 -->
+  <listener>
+  	<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+  </listener>
+  
+  
+  <!-- 한글설정하기
+  		jsp파일에서 setcharacterEncoding을 안해주어도 된다.
+   -->
+  <filter>
+  	<filter-name>encodingFilter</filter-name>
+  	<filter-class>
+  		org.springframework.web.filter.CharacterEncodingFilter
+  	</filter-class>
+  	
+  	<init-param>
+  		<param-name>encoding</param-name>
+  		<param-value>UTF-8</param-value>
+  	</init-param>
+  	
+  	<!-- forceEncoding : 강하게 설정 -->
+  	<init-param>
+  		<param-name>forceEncoding</param-name>
+  		<param-value>true</param-value>
+  	</init-param>
+  		
+  </filter>
+  
+  <filter-mapping>
+  	<filter-name>encodingFilter</filter-name>
+  	<url-pattern>/*</url-pattern>
+  </filter-mapping>
+  
+</web-app>

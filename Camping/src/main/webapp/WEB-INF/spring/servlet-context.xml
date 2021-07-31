@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
+
+	<!-- spring MVC annotation(주석문, 지시문)을 사용하기 위한 설정 -->
+	<context:annotation-config />
+	
+	<!-- bean 객체를 생성할 때 사용 
+	 	 장점 : XML에서 바로 객체를 생성하면 singleton이 필요 없어진다.
+		 사용자의 view의 위치, 확장자명 설정 -->
+		 
+	 <bean id="tilesConfigurer" class="org.springframework.web.servlet.view.tiles3.TilesConfigurer">
+      <property name="definitions">
+      <!-- jsp를 모아주는 파일을 넣는다 -->
+         <list>
+            <value>/WEB-INF/views/layouts.xml</value>
+         </list>
+      </property>
+   </bean>
+   
+   <bean id="viewResolver" class="org.springframework.web.servlet.view.UrlBasedViewResolver">
+      <property name="requestContextAttribute" value="requestContext"/>
+      <property name="viewClass" value="org.springframework.web.servlet.view.tiles3.TilesView"/>
+   </bean>	 
+   
+	<!-- <bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		property : class의 내부 변수 
+		prefix : views의 경로 설정
+		<property name="prefix" value="/WEB-INF/views/"></property>
+		suffix : 사용할 확장자 설정
+		<property name="suffix" value=".jsp"></property>
+	</bean> -->
+	
+	<!-- base-package : 스프링에서 사용할 공통 패키지 설정 -->
+	<context:component-scan base-package="com.camping.bit"/>
+
+
+<!-- 	Ajax 주석문을 사용 허가(Ajax를 사용하겠다) axios ==(비슷) ajax -->
+	<mvc:annotation-driven />
+	
+<!-- 	spring에서 처리할 수 없는 요청은 tomcat에 위임 -->
+	<mvc:default-servlet-handler/>
+
+</beans>
