@@ -18,6 +18,8 @@ public class MainContorller {
 
 	@RequestMapping(value = "main.do", method = RequestMethod.GET)
 	public String main() {
+
+		System.out.println("djlee");
 		
 		List<MemberDto> list = service.getMember();
 		
